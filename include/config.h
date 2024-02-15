@@ -1,14 +1,18 @@
-#ifndef CONFIG_H_INCLUDE
-#define CONFIG_H_INCLUDE
+// Create a module for configuration settings
+mod config {
+    // Use a const for configuration values
+    pub const INTERNAL_BUILD: bool = true;
+}
 
-#define INTERNAL_BUILD 1	//when internal build is true and an assertion is hit, you have the option to debug or ignore
-							//when internal build if false and an asertion is hit, the error is reported and the program 
-							//closes
+// Conditional compilation for internal builds
+#[cfg(config::INTERNAL_BUILD)]
+fn handle_assertion_failure() {
+    // Provide options to debug or ignore the assertion
+    // ... implement your desired behavior here ...
+}
 
-
-
-
-
-
-
-#endif
+#[cfg(not(config::INTERNAL_BUILD))]
+fn handle_assertion_failure() {
+    // Report the error and terminate the program
+    panic!("Assertion failure occurred!");
+}
